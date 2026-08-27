@@ -165,6 +165,7 @@
     color:var(--ink-soft);text-decoration:underline;cursor:pointer;padding:6px;
   }
   .change:hover{color:var(--red)}
+  .closed-note{font-size:12px;line-height:1.6;color:var(--ink-soft);margin:0;max-width:32ch;margin-inline:auto}
 
   .status{text-align:center;font-size:13px;color:var(--ink-soft);padding:var(--s3) 0}
 
@@ -241,7 +242,7 @@
     <section class="rsvp" id="rsvpView" hidden>
       <p class="rsvp-label">Invitación para</p>
       <p class="guest-name" id="guestName"></p>
-      <p class="deadline">Confirma antes del 6 de septiembre</p>
+      <p class="deadline" id="deadlineMsg">Confirma antes del 6 de septiembre</p>
       <div class="btn-row">
         <button class="btn btn-si" id="btnSi" type="button">Sí, allí estaré</button>
         <button class="btn btn-no" id="btnNo" type="button">No podré ir</button>
@@ -253,6 +254,7 @@
       <p class="stamp" id="thanksStamp"></p>
       <p id="thanksMsg"></p>
       <button class="change" id="btnChange" type="button">Cambiar mi respuesta</button>
+      <p class="closed-note" id="closedNote" hidden>El plazo para modificar respuestas se cerró el 6 de septiembre. Si te surge un imprevisto, avisa a Diego directamente.</p>
     </section>
 
     <p class="closing">¡Te esperamos para brindar, reír y pasarlo en grande!</p>
@@ -294,8 +296,14 @@
   var btnSi       = document.getElementById('btnSi');
   var btnNo       = document.getElementById('btnNo');
   var btnChange   = document.getElementById('btnChange');
+  var closedNote  = document.getElementById('closedNote');
+  var deadlineMsg = document.getElementById('deadlineMsg');
   var form        = document.getElementById('rsvpForm');
   var hiddenFrame = document.querySelector('iframe[name="hiddenFrame"]');
+
+  // Se puede editar la respuesta hasta la medianoche del 6 al 7 de septiembre (hora peninsular).
+  var CIERRE_EDICION = new Date('2026-09-07T00:00:00+02:00');
+  var sePuedeEditar = Date.now() < CIERRE_EDICION.getTime();
 
   var ICS = [
     'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Invitacion//ES','CALSCALE:GREGORIAN',
@@ -316,6 +324,9 @@
     btnSi.disabled = false; btnNo.disabled = false;
     btnSi.textContent = 'Sí, allí estaré';
     btnNo.textContent = 'No podré ir';
+    deadlineMsg.textContent = sePuedeEditar
+      ? 'Confirma antes del 6 de septiembre'
+      : 'El plazo ya pasó, pero todavía estás a tiempo de decírnoslo';
     if(guestName){
       guestNameEl.textContent = guestName;
       hide(noNameWarn);
@@ -334,6 +345,13 @@
     stamp.innerHTML = si
       ? '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> Confirmado'
       : '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg> No asistirá';
+    if(sePuedeEditar){
+      btnChange.hidden = false;
+      closedNote.hidden = true;
+    } else {
+      btnChange.hidden = true;
+      closedNote.hidden = false;
+    }
     document.getElementById('thanksMsg').textContent = si
       ? (firstName ? firstName + ', te esperamos el 12 de septiembre a partir de las 14:00 h.' : 'Te esperamos el 12 de septiembre a partir de las 14:00 h.')
       : (firstName ? 'Gracias por avisar, ' + firstName + '. Te echaremos de menos.' : 'Gracias por avisar. Te echaremos de menos.');
