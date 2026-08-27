@@ -71,6 +71,9 @@
   .noname{
     text-align:center;font-size:13px;color:var(--red);margin-top:10px;
   }
+  .checking{
+    text-align:center;font-size:13px;color:var(--line);padding:20px 0;
+  }
 </style>
 
 <div class="wrap">
@@ -97,17 +100,19 @@
       <div class="meta-row"><span class="meta-ico">🕑</span> A partir de las 14:00 h</div>
     </div>
 
-    <div class="rsvp" id="rsvpView">
+    <div class="checking" id="checkingView">Comprobando tu invitación…</div>
+
+    <div class="rsvp" id="rsvpView" style="display:none">
       <div class="rsvp-label">Invitación para</div>
       <div class="guest-name" id="guestName"></div>
       <div class="btn-row">
         <button class="btn btn-si" id="btnSi">Sí, allí estaré</button>
         <button class="btn btn-no" id="btnNo">No podré ir</button>
       </div>
-      <div class="noname" id="noNameWarn" style="display:none">Este enlace no tiene nombre asignado.</div>
+      <div class="noname" id="noNameWarn" style="display:none">Este enlace no tiene invitado asignado.</div>
     </div>
 
-    <div class="thanks" id="thanksView">
+    <div class="thanks" id="thanksView" style="display:none">
       <div class="big" id="thanksName"></div>
       <p id="thanksMsg"></p>
     </div>
@@ -120,12 +125,20 @@
 <form id="rsvpForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdM4Lvt_VVoKPMsvCOHOM9qHH5UB_3s69RlYRXAJ-5PPeQXeg/formResponse" method="POST" target="hiddenFrame" style="display:none">
   <input type="text" name="entry.79745499" id="fieldName">
   <input type="text" name="entry.1578629979" id="fieldAsistencia">
+  <input type="text" name="entry.5094393" id="fieldId">
 </form>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
+  const SHEET_ID = '17XKYsHSbu9uj0Y9AxCeGZjuyNLWMwOuFMHomko14HvI';
+  const SHEET_GID = '1792551306';
+  const CSV_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:csv&gid=' + SHEET_GID;
+
   const params = new URLSearchParams(window.location.search);
   const guestName = params.get('name') || '';
+  const guestId = params.get('id') || '';
 
+  const checkingView = document.getElementById('checkingView');
   const rsvpView = document.getElementById('rsvpView');
   const thanksView = document.getElementById('thanksView');
   const guestNameEl = document.getElementById('guestName');
@@ -135,15 +148,30 @@
   const form = document.getElementById('rsvpForm');
   const fieldName = document.getElementById('fieldName');
   const fieldAsistencia = document.getElementById('fieldAsistencia');
+  const fieldId = document.getElementById('fieldId');
   const hiddenFrame = document.querySelector('iframe[name="hiddenFrame"]');
 
-  if(guestName){
-    guestNameEl.textContent = guestName;
-  } else {
-    guestNameEl.textContent = '—';
-    noNameWarn.style.display = 'block';
-    btnSi.disabled = true;
-    btnNo.disabled = true;
+  function showRsvp(){
+    checkingView.style.display = 'none';
+    rsvpView.style.display = 'block';
+    if(guestName){
+      guestNameEl.textContent = guestName;
+    } else {
+      guestNameEl.textContent = '—';
+      noNameWarn.style.display = 'block';
+      btnSi.disabled = true;
+      btnNo.disabled = true;
+    }
+  }
+
+  function showThanks(respuesta){
+    checkingView.style.display = 'none';
+    rsvpView.style.display = 'none';
+    thanksView.style.display = 'block';
+    document.getElementById('thanksName').textContent = 'Bienvenido/a ' + (guestName || '');
+    document.getElementById('thanksMsg').textContent = respuesta === 'Sí'
+      ? 'Te esperamos el próximo 12 de septiembre a partir de las 14:00 h. ¡Nos vemos allí!'
+      : 'Gracias por avisar, ' + (guestName || '') + '. Sentiremos que no puedas venir.';
   }
 
   function sendRSVP(respuesta){
@@ -151,6 +179,7 @@
     btnNo.disabled = true;
     fieldName.value = guestName;
     fieldAsistencia.value = respuesta;
+    fieldId.value = guestId;
 
     hiddenFrame.addEventListener('load', function onLoad(){
       hiddenFrame.removeEventListener('load', onLoad);
@@ -160,15 +189,37 @@
     form.submit();
   }
 
-  function showThanks(respuesta){
-    rsvpView.style.display = 'none';
-    thanksView.style.display = 'block';
-    document.getElementById('thanksName').textContent = 'Bienvenido/a ' + guestName;
-    document.getElementById('thanksMsg').textContent = respuesta === 'Sí'
-      ? 'Te esperamos el próximo 12 de septiembre a partir de las 14:00 h. ¡Nos vemos allí!'
-      : 'Gracias por avisar, ' + guestName + '. Sentiremos que no puedas venir.';
-  }
-
   btnSi.addEventListener('click', function(){ sendRSVP('Sí'); });
   btnNo.addEventListener('click', function(){ sendRSVP('No'); });
+
+  async function init(){
+    if(!guestId){
+      showRsvp();
+      return;
+    }
+    try{
+      const res = await fetch(CSV_URL);
+      const text = await res.text();
+      const parsed = Papa.parse(text.trim());
+      const rows = parsed.data;
+      // columnas esperadas: [Marca temporal, Nombre, Asistencia, ID]
+      let existing = null;
+      for(let i = 1; i < rows.length; i++){
+        const row = rows[i];
+        if(row && row[3] && row[3].trim() === guestId.trim()){
+          existing = row;
+          break;
+        }
+      }
+      if(existing){
+        showThanks(existing[2]);
+      } else {
+        showRsvp();
+      }
+    }catch(e){
+      showRsvp();
+    }
+  }
+
+  init();
 </script>
