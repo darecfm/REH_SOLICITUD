@@ -30,7 +30,6 @@
   .balloon{display:block;margin:0 auto 22px;width:150px;height:auto}
   .divider{display:flex;align-items:center;gap:10px;margin:22px 0;}
   .divider .ln{flex:1;height:1px;background:var(--ink)}
-  .divider .dot{width:6px;height:6px;border-radius:50%;background:var(--ink)}
   .divider .mark{color:var(--red);font-size:16px}
   .lead{text-align:center;font-size:15px;margin:0 0 6px}
   .banner{
@@ -45,20 +44,32 @@
   .meta{margin:22px 0 6px}
   .meta-row{display:flex;align-items:center;gap:12px;font-size:15px;margin:10px 0}
   .meta-ico{color:var(--red);font-size:18px;width:20px;text-align:center}
-  .greet{
-    text-align:center;font-size:15px;margin:26px 0 18px;line-height:1.5;
+
+  .rsvp{margin-top:28px;text-align:center}
+  .rsvp-label{font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  .guest-name{
+    font-family:'Brush Script MT',cursive;font-size:30px;margin:0 0 18px;
   }
-  .greet b{font-family:'Brush Script MT',cursive;font-size:26px;display:block;margin-bottom:6px}
-  .cta{
-    display:block;width:100%;text-align:center;text-decoration:none;
-    padding:14px;background:var(--red);color:#fff;border:none;
-    border-radius:4px;font-family:inherit;font-size:14px;letter-spacing:1px;
-    text-transform:uppercase;font-weight:700;cursor:pointer;margin-top:10px;
+  .btn-row{display:flex;gap:12px}
+  .btn{
+    flex:1;padding:14px;border:none;border-radius:4px;
+    font-family:inherit;font-size:14px;letter-spacing:1px;text-transform:uppercase;
+    font-weight:700;cursor:pointer;
   }
-  .cta:active{opacity:0.85}
+  .btn-si{background:var(--red);color:#fff}
+  .btn-no{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+  .btn:disabled{opacity:0.5;cursor:default}
+
+  .thanks{display:none;text-align:center;padding-top:6px}
+  .thanks .big{font-family:'Brush Script MT',cursive;font-size:30px;margin:0 0 10px}
+  .thanks p{font-size:14px;line-height:1.6}
+
   .box{
     border:1px solid var(--ink);padding:16px 18px;margin-top:26px;
     font-size:14px;text-align:center;line-height:1.5;
+  }
+  .noname{
+    text-align:center;font-size:13px;color:var(--red);margin-top:10px;
   }
 </style>
 
@@ -86,32 +97,78 @@
       <div class="meta-row"><span class="meta-ico">🕑</span> A partir de las 14:00 h</div>
     </div>
 
-    <div class="greet" id="greet"></div>
+    <div class="rsvp" id="rsvpView">
+      <div class="rsvp-label">Invitación para</div>
+      <div class="guest-name" id="guestName"></div>
+      <div class="btn-row">
+        <button class="btn btn-si" id="btnSi">Sí, allí estaré</button>
+        <button class="btn btn-no" id="btnNo">No podré ir</button>
+      </div>
+      <div class="noname" id="noNameWarn" style="display:none">Este enlace no tiene nombre asignado.</div>
+    </div>
 
-    <a class="cta" id="ctaBtn" href="#" target="_blank" rel="noopener">Confirmar asistencia</a>
+    <div class="thanks" id="thanksView">
+      <div class="big" id="thanksName"></div>
+      <p id="thanksMsg"></p>
+    </div>
 
     <div class="box">¡Te esperamos para brindar, reír y pasarlo en grande!</div>
   </div>
 </div>
 
-<script>
-  const FORM_BASE = 'https://docs.google.com/forms/d/e/1FAIpQLSdM4Lvt_VVoKPMsvCOHOM9qHH5UB_3s69RlYRXAJ-5PPeQXeg/viewform';
-  const NAME_ENTRY = 'entry.79745499';
+<iframe name="hiddenFrame" style="display:none"></iframe>
+<form id="rsvpForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdM4Lvt_VVoKPMsvCOHOM9qHH5UB_3s69RlYRXAJ-5PPeQXeg/formResponse" method="POST" target="hiddenFrame" style="display:none">
+  <input type="text" name="entry.79745499" id="fieldName">
+  <input type="text" name="entry.1578629979" id="fieldAsistencia">
+</form>
 
+<script>
   const params = new URLSearchParams(window.location.search);
   const guestName = params.get('name') || '';
 
-  const greetEl = document.getElementById('greet');
-  const ctaBtn = document.getElementById('ctaBtn');
+  const rsvpView = document.getElementById('rsvpView');
+  const thanksView = document.getElementById('thanksView');
+  const guestNameEl = document.getElementById('guestName');
+  const noNameWarn = document.getElementById('noNameWarn');
+  const btnSi = document.getElementById('btnSi');
+  const btnNo = document.getElementById('btnNo');
+  const form = document.getElementById('rsvpForm');
+  const fieldName = document.getElementById('fieldName');
+  const fieldAsistencia = document.getElementById('fieldAsistencia');
+  const hiddenFrame = document.querySelector('iframe[name="hiddenFrame"]');
 
   if(guestName){
-    greetEl.innerHTML = '<b>Bienvenido/a ' + guestName + '</b>Te esperamos el próximo 12 de septiembre';
+    guestNameEl.textContent = guestName;
+  } else {
+    guestNameEl.textContent = '—';
+    noNameWarn.style.display = 'block';
+    btnSi.disabled = true;
+    btnNo.disabled = true;
   }
 
-  const formUrl = new URL(FORM_BASE);
-  formUrl.searchParams.set('usp', 'pp_url');
-  if(guestName){
-    formUrl.searchParams.set(NAME_ENTRY, guestName);
+  function sendRSVP(respuesta){
+    btnSi.disabled = true;
+    btnNo.disabled = true;
+    fieldName.value = guestName;
+    fieldAsistencia.value = respuesta;
+
+    hiddenFrame.addEventListener('load', function onLoad(){
+      hiddenFrame.removeEventListener('load', onLoad);
+      showThanks(respuesta);
+    });
+
+    form.submit();
   }
-  ctaBtn.href = formUrl.toString();
+
+  function showThanks(respuesta){
+    rsvpView.style.display = 'none';
+    thanksView.style.display = 'block';
+    document.getElementById('thanksName').textContent = 'Bienvenido/a ' + guestName;
+    document.getElementById('thanksMsg').textContent = respuesta === 'Sí'
+      ? 'Te esperamos el próximo 12 de septiembre a partir de las 14:00 h. ¡Nos vemos allí!'
+      : 'Gracias por avisar, ' + guestName + '. Sentiremos que no puedas venir.';
+  }
+
+  btnSi.addEventListener('click', function(){ sendRSVP('Sí'); });
+  btnNo.addEventListener('click', function(){ sendRSVP('No'); });
 </script>
