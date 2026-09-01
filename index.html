@@ -2,152 +2,288 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Invitación cumpleaños</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cumpleaños de Rubén Escobedo Horna</title>
+<meta name="theme-color" content="#F3ECE4">
+<meta property="og:title" content="Cumpleaños de Rubén Escobedo Horna">
+<meta property="og:description" content="12 de septiembre, a partir de las 14:00 h · Rambla del Carmel, 28">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&display=swap" rel="stylesheet">
 <style>
   :root{
     --cream:#F3ECE4;
+    --cream-2:#EBE2D7;
     --ink:#221F1D;
+    --ink-soft:#6B635B;
     --red:#A32020;
+    --red-dark:#7E1717;
     --blue:#2C4EA3;
-    --line:#C9BFB3;
+    --line:#D6CCC0;
+
+    --s1:8px;
+    --s2:16px;
+    --s3:24px;
+    --s4:40px;
+    --s5:56px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;width:100%;overflow-x:hidden}
+  body{
+    background:var(--cream);
+    font-family:'Courier New',Courier,monospace;
+    color:var(--ink);
+    -webkit-text-size-adjust:100%;
+  }
   .wrap{
     min-height:100vh;
     min-height:100dvh;
-    width:100%;
-    background:var(--cream);
     display:flex;
     justify-content:center;
-    padding:clamp(20px,6vw,32px) clamp(14px,5vw,18px) 60px;
-    font-family:'Courier New',monospace;
-    color:var(--ink);
+    padding:var(--s4) clamp(18px,5vw,24px) var(--s5);
   }
-  .card{width:100%;max-width:420px}
+  .card{width:100%;max-width:440px}
+
+  /* ---------- Cabecera ---------- */
   .eyebrow{
-    text-align:center;font-size:clamp(11px,3vw,13px);letter-spacing:2px;
-    color:var(--red);margin:0 0 4px;text-transform:uppercase;font-weight:700;
+    text-align:center;font-size:12px;letter-spacing:4px;text-transform:uppercase;
+    color:var(--red);margin:0 0 var(--s1);font-weight:700;
   }
   h1{
-    text-align:center;font-family:Impact,'Arial Narrow',sans-serif;
-    font-size:clamp(32px,11vw,44px);letter-spacing:1px;margin:0 0 clamp(20px,6vw,30px);line-height:0.95;
+    text-align:center;
+    font-family:'Anton',Impact,'Arial Narrow',sans-serif;
+    font-weight:400;
+    font-size:clamp(38px,12vw,52px);
+    letter-spacing:1px;
+    margin:0;
+    line-height:0.9;
   }
   h1 span{color:var(--red)}
-  .balloon{display:block;margin:0 auto 22px;width:clamp(110px,32vw,150px);height:auto}
-  .divider{display:flex;align-items:center;gap:10px;margin:22px 0;}
-  .divider .ln{flex:1;height:1px;background:var(--ink)}
-  .divider .mark{color:var(--red);font-size:16px}
-  .lead{text-align:center;font-size:clamp(13px,3.5vw,15px);margin:0 0 6px}
-  .banner{
-    background:var(--red);color:#fff;text-align:center;
-    padding:8px 14px;font-size:clamp(11px,3vw,13px);letter-spacing:2px;
-    font-weight:700;margin:10px auto 18px;width:fit-content;
+
+  .balloons{
+    display:block;margin:var(--s3) auto var(--s3);
+    width:clamp(150px,42vw,190px);height:auto;
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .b-group{animation:float 6s ease-in-out infinite;transform-origin:110px 205px}
+    .b-group.b2{animation-duration:7.2s;animation-delay:-1.4s}
+    .b-group.b3{animation-duration:6.6s;animation-delay:-.7s}
+    @keyframes float{
+      0%,100%{transform:rotate(-1.1deg)}
+      50%{transform:rotate(1.1deg)}
+    }
+  }
+
+  .divider{display:flex;align-items:center;gap:var(--s2);margin:0 0 var(--s3)}
+  .divider .ln{flex:1;height:1px;background:var(--line)}
+  .divider .mark{color:var(--red);font-size:14px;line-height:1}
+
+  /* ---------- Protagonista ---------- */
+  .lead{
+    text-align:center;font-size:14px;line-height:1.6;
+    color:var(--ink-soft);margin:0 0 var(--s2);
   }
   .name{
-    text-align:center;font-family:'Brush Script MT',cursive;
-    font-size:clamp(26px,8vw,36px);margin:0 0 20px;color:var(--ink);
-    word-wrap:break-word;
+    text-align:center;
+    font-family:'Kaushan Script','Brush Script MT',cursive;
+    font-weight:400;
+    font-size:clamp(34px,10vw,46px);
+    line-height:1.15;
+    margin:0 0 var(--s4);
+    overflow-wrap:break-word;
   }
-  .meta{margin:22px 0 6px}
-  .meta-row{display:flex;align-items:center;gap:12px;font-size:clamp(13px,3.5vw,15px);margin:10px 0}
-  .meta-ico{color:var(--red);font-size:18px;width:20px;text-align:center;flex-shrink:0}
 
-  .rsvp{margin-top:28px;text-align:center}
-  .rsvp-label{font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
-  .deadline{font-size:clamp(11px,3vw,12px);color:var(--red);margin:0 0 16px;font-weight:700}
+  /* ---------- Datos ---------- */
+  .meta{
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:var(--s3) var(--s3) calc(var(--s3) - 4px);
+    margin:0 0 var(--s4);
+    background:rgba(255,255,255,.35);
+  }
+  .meta-row{
+    display:flex;align-items:flex-start;gap:var(--s2);
+    font-size:15px;line-height:1.45;margin:0 0 var(--s2);
+  }
+  .meta-row:last-child{margin-bottom:0}
+  .meta-row svg{flex:0 0 20px;width:20px;height:20px;stroke:var(--red);margin-top:1px}
+  .meta-row a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+  .meta-row a:hover{border-bottom-color:var(--red)}
+  .meta-sub{display:block;font-size:12px;color:var(--ink-soft);margin-top:2px}
+
+  .actions{display:flex;gap:var(--s1);margin:calc(var(--s2) * -1 + -8px) 0 var(--s4);justify-content:center}
+  .link-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:inherit;font-size:12px;letter-spacing:.5px;text-transform:uppercase;
+    color:var(--ink-soft);background:none;border:none;padding:6px 4px;cursor:pointer;
+    text-decoration:none;
+  }
+  .link-btn svg{width:15px;height:15px;stroke:currentColor}
+  .link-btn:hover{color:var(--red)}
+
+  /* ---------- RSVP ---------- */
+  .rsvp{text-align:center}
+  .rsvp-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
   .guest-name{
-    font-family:'Courier New',monospace;font-weight:700;text-transform:uppercase;
-    letter-spacing:1px;font-size:clamp(17px,5vw,22px);margin:0 0 18px;color:var(--red);
-    word-wrap:break-word;
+    font-weight:700;font-size:clamp(18px,5.5vw,22px);letter-spacing:.5px;
+    margin:0 0 var(--s2);color:var(--ink);overflow-wrap:break-word;
   }
-  .btn-row{display:flex;gap:10px}
+  .deadline{font-size:12px;color:var(--red);margin:0 0 var(--s2);font-weight:700}
+  .btn-row{display:flex;gap:var(--s1)}
   .btn{
-    flex:1;min-width:0;padding:14px 8px;border:none;border-radius:4px;
-    font-family:inherit;font-size:clamp(12px,3.3vw,14px);letter-spacing:0.5px;text-transform:uppercase;
-    font-weight:700;cursor:pointer;
+    flex:1 1 0;min-width:0;min-height:52px;
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:14px 10px;border-radius:4px;
+    font-family:inherit;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+    font-weight:700;cursor:pointer;border:1px solid transparent;
+    transition:background-color .15s ease,color .15s ease;
   }
-  .btn-si{background:var(--red);color:#fff}
-  .btn-no{background:#fff;color:var(--ink);border:1px solid var(--ink)}
-  .btn:disabled{opacity:0.5;cursor:default}
+  .btn:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+  .btn-si{background:var(--red);color:#fff;border-color:var(--red)}
+  .btn-si:hover:not(:disabled){background:var(--red-dark)}
+  .btn-no{background:transparent;color:var(--ink);border-color:var(--ink)}
+  .btn-no:hover:not(:disabled){background:var(--cream-2)}
+  .btn:disabled{opacity:.4;cursor:default}
 
-  .thanks{display:none;text-align:center;padding-top:6px}
-  .thanks p{font-size:clamp(13px,3.5vw,14px);line-height:1.6}
+  .noname{font-size:13px;color:var(--red);margin-top:var(--s2);line-height:1.5}
+
+  /* ---------- Confirmado ---------- */
+  .thanks{text-align:center}
+  .thanks .stamp{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;
+    border:1px solid var(--red);color:var(--red);border-radius:999px;
+    padding:8px 18px;margin-bottom:var(--s2);
+  }
+  .thanks .stamp svg{width:15px;height:15px;stroke:var(--red)}
+  .thanks .stamp.no{border-color:var(--ink-soft);color:var(--ink-soft)}
+  .thanks .stamp.no svg{stroke:var(--ink-soft)}
+  .thanks p{font-size:15px;line-height:1.7;margin:0 0 var(--s2)}
   .change{
     background:none;border:none;font-family:inherit;font-size:12px;
-    color:var(--ink);text-decoration:underline;cursor:pointer;padding:6px;margin-top:4px;
+    color:var(--ink-soft);text-decoration:underline;cursor:pointer;padding:6px;
   }
   .change:hover{color:var(--red)}
-  .closed-note{font-size:12px;line-height:1.6;color:#6B635B;margin:8px 0 0;max-width:30ch;margin-inline:auto}
+  .closed-note{font-size:12px;line-height:1.6;color:var(--ink-soft);margin:0;max-width:32ch;margin-inline:auto}
 
-  .box{
-    border:1px solid var(--ink);padding:16px 18px;margin-top:26px;
-    font-size:clamp(13px,3.5vw,14px);text-align:center;line-height:1.5;
+  .invalid{text-align:center;padding-top:var(--s5)}
+  .invalid svg{width:44px;height:44px;stroke:var(--red);margin-bottom:var(--s2)}
+  .invalid h2{
+    font-family:'Anton',Impact,sans-serif;font-weight:400;
+    font-size:26px;letter-spacing:.5px;margin:0 0 var(--s2);
   }
-  .noname{
-    text-align:center;font-size:13px;color:var(--red);margin-top:10px;
+  .invalid p{font-size:14px;line-height:1.7;color:var(--ink-soft);margin:0 auto;max-width:34ch}
+
+  .status{text-align:center;font-size:13px;color:var(--ink-soft);padding:var(--s3) 0}
+
+  .closing{
+    border-top:1px solid var(--line);
+    margin-top:var(--s5);padding-top:var(--s3);
+    font-size:14px;line-height:1.7;text-align:center;color:var(--ink-soft);
   }
-  .checking{
-    text-align:center;font-size:13px;color:var(--line);padding:20px 0;
-  }
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <div class="card">
+  <main class="card">
+    <div id="invitationView" hidden>
 
-    <div class="eyebrow">Invitación</div>
+    <p class="eyebrow">Invitación</p>
     <h1>CUMPLE<span>AÑOS</span></h1>
 
-    <svg class="balloon" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="60" cy="75" rx="52" ry="65" fill="#2C4EA3"/>
-      <ellipse cx="42" cy="50" rx="16" ry="22" fill="#5678C8" opacity="0.55"/>
-      <path d="M60 138 L54 148 L66 148 Z" fill="#2C4EA3"/>
-      <path d="M60 148 C 55 165, 68 178, 58 198" stroke="#2C4EA3" fill="none" stroke-width="2"/>
+    <svg class="balloons" viewBox="0 0 220 212" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tres globos de cumpleaños">
+      <path class="b-group b2" d="M58 126 C 64 154, 96 172, 110 206" fill="none" stroke="#A32020" stroke-width="1.6" opacity=".75"/>
+      <path class="b-group b3" d="M162 122 C 156 152, 124 174, 110 206" fill="none" stroke="#2C4EA3" stroke-width="1.6" opacity=".75"/>
+      <path class="b-group" d="M110 116 C 105 145, 116 176, 110 206" fill="none" stroke="#2C4EA3" stroke-width="1.6" opacity=".75"/>
+
+      <g class="b-group b2">
+        <ellipse cx="58" cy="82" rx="31" ry="39" fill="#A32020"/>
+        <ellipse cx="47" cy="66" rx="9" ry="13" fill="#C25353"/>
+        <path d="M52 118 L64 118 L58 128 Z" fill="#7E1717"/>
+      </g>
+      <g class="b-group b3">
+        <ellipse cx="162" cy="80" rx="29" ry="37" fill="#3C64C4"/>
+        <ellipse cx="152" cy="65" rx="8" ry="12" fill="#7A97DC"/>
+        <path d="M156 114 L168 114 L162 124 Z" fill="#2C4EA3"/>
+      </g>
+      <g class="b-group">
+        <ellipse cx="110" cy="60" rx="40" ry="50" fill="#2C4EA3"/>
+        <ellipse cx="96" cy="40" rx="11" ry="16" fill="#5678C8"/>
+        <path d="M103 106 L117 106 L110 118 Z" fill="#223D80"/>
+      </g>
     </svg>
 
     <div class="divider"><span class="ln"></span><span class="mark">✦</span><span class="ln"></span></div>
 
-    <p class="lead">Estás invitado a celebrar el</p>
-    <div class="banner">CUMPLEAÑOS DE</div>
-    <p class="name">Rubén Escobedo Horna</p>
+    <p class="lead">Estás invitado a celebrar el cumpleaños de</p>
+    <h2 class="name">Rubén Escobedo Horna</h2>
 
     <div class="meta">
-      <div class="meta-row"><span class="meta-ico">🗓️</span> 12 de septiembre</div>
-      <div class="meta-row"><span class="meta-ico">🕑</span> A partir de las 14:00 h</div>
-      <div class="meta-row"><span class="meta-ico">📍</span> Rambla del Carmel, 28</div>
+      <p class="meta-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
+        <span>Sábado 12 de septiembre</span>
+      </p>
+      <p class="meta-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+        <span>A partir de las 14:00 h</span>
+      </p>
+      <p class="meta-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <span>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Rambla+del+Carmel+28+Barcelona" target="_blank" rel="noopener">Rambla del Carmel, 28</a>
+          <span class="meta-sub">Barcelona · abrir en Maps</span>
+        </span>
+      </p>
     </div>
 
-    <div class="checking" id="checkingView">Comprobando tu invitación…</div>
-
-    <div class="rsvp" id="invalidView" style="display:none">
-      <div class="box">Este enlace no es válido.<br>Contacta con Diego si crees que es un error.</div>
+    <div class="actions">
+      <a class="link-btn" id="btnIcs" href="#" download="cumpleanos-ruben.ics">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M4.5 19h15"/></svg>
+        Añadir al calendario
+      </a>
     </div>
 
-    <div class="rsvp" id="rsvpView" style="display:none">
-      <div class="rsvp-label">Invitación para</div>
-      <div class="guest-name" id="guestName"></div>
-      <div class="deadline">Por favor, confirma antes del 6 de septiembre</div>
+    <p class="status" id="statusView">Comprobando tu invitación…</p>
+
+    <section class="rsvp" id="rsvpView" hidden>
+      <p class="rsvp-label">Invitación para</p>
+      <p class="guest-name" id="guestName"></p>
+      <p class="deadline" id="deadlineMsg">Confirma antes del 6 de septiembre</p>
       <div class="btn-row">
-        <button class="btn btn-si" id="btnSi">Sí, allí estaré</button>
-        <button class="btn btn-no" id="btnNo">No podré ir</button>
+        <button class="btn btn-si" id="btnSi" type="button">Sí, allí estaré</button>
+        <button class="btn btn-no" id="btnNo" type="button">No podré ir</button>
       </div>
-      <div class="noname" id="noNameWarn" style="display:none">Este enlace no tiene invitado asignado.</div>
-    </div>
+    </section>
 
-    <div class="thanks" id="thanksView" style="display:none">
+    <section class="thanks" id="thanksView" hidden>
+      <p class="stamp" id="thanksStamp"></p>
       <p id="thanksMsg"></p>
       <button class="change" id="btnChange" type="button">Cambiar mi respuesta</button>
-      <p class="closed-note" id="closedNote" style="display:none">El plazo para modificar respuestas se cerró el 6 de septiembre. Si te surge un imprevisto, avisa a Diego directamente.</p>
+      <p class="closed-note" id="closedNote" hidden>El plazo para modificar respuestas se cerró el 6 de septiembre. Si te surge un imprevisto, avisa a Rubén directamente.</p>
+    </section>
+
+    <p class="closing">¡Te esperamos para brindar, reír y pasarlo en grande!</p>
     </div>
 
-    <div class="box">¡Te esperamos para brindar, reír y pasarlo en grande!</div>
-  </div>
+    <section class="invalid" id="invalidView" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16.2v.1"/></svg>
+      <h2>ENLACE NO VÁLIDO</h2>
+      <p>Esta invitación es personal y este enlace no corresponde a ningún invitado. Pide a Rubén el enlace que te tocó a ti.</p>
+    </section>
+
+    <noscript>
+      <section class="invalid">
+        <h2>ACTIVA JAVASCRIPT</h2>
+        <p>Esta invitación necesita JavaScript para comprobar tu enlace y guardar tu respuesta.</p>
+      </section>
+    </noscript>
+  </main>
 </div>
 
-<iframe name="hiddenFrame" style="display:none"></iframe>
+<iframe name="hiddenFrame" title="Envío de respuesta" style="display:none"></iframe>
 <form id="rsvpForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdM4Lvt_VVoKPMsvCOHOM9qHH5UB_3s69RlYRXAJ-5PPeQXeg/formResponse" method="POST" target="hiddenFrame" style="display:none">
   <input type="text" name="entry.79745499" id="fieldName">
   <input type="text" name="entry.1578629979" id="fieldAsistencia">
@@ -156,121 +292,143 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
-  const SHEET_ID = '17XKYsHSbu9uj0Y9AxCeGZjuyNLWMwOuFMHomko14HvI';
-  const SHEET_GID = '1792551306';
-  const CSV_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:csv&gid=' + SHEET_GID;
+  var SHEET_ID = '17XKYsHSbu9uj0Y9AxCeGZjuyNLWMwOuFMHomko14HvI';
+  var SHEET_GID = '1792551306';
+  var CSV_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:csv&gid=' + SHEET_GID;
 
-  const VALID_IDS = [
-    'mr7356','ls2033','mr1835','ar4842',
-    'cr2572','rr5329','sr7259','rh3062',
-    'la7014','dc3873','dc2583',
-    'ie0038','lm0676',
-    'ic7573','es0948'
-  ];
+  var params = new URLSearchParams(window.location.search);
 
-  const params = new URLSearchParams(window.location.search);
-  const guestName = params.get('name') || '';
-  const guestId = params.get('id') || '';
+  // ---------------------------------------------------------------
+  // Lista de invitados. El nombre SIEMPRE sale de aquí, nunca de la URL.
+  // Para añadir a alguien: 'idnuevo': 'Nombre Apellidos',
+  // ---------------------------------------------------------------
+  var INVITADOS = {
+    'mr7356': 'Marco Antonio Reyes Horna',
+    'ls2033': 'Laly Santisteban',
+    'mr1835': 'Marc Reyes Santisteban',
+    'ar4842': 'Alejandro Reyes Santisteban',
+    'cr2572': 'Cristhian Reyes Horna',
+    'rr5329': 'Rossmery Reyes Valenzuela',
+    'sr7259': 'Samantha Reyes',
+    'rh3062': 'Rosa Horna Alfaro',
+    'la7014': 'Luz María Arenas Horna',
+    'dc3873': 'Daniel Tito Cancho Huamani',
+    'dc2583': 'Daniel Cancho Arenas',
+    'ie0038': 'Iseldita Escobedo Horna',
+    'lm0676': 'Liliana Merino Arroyo',
+    'ic7573': 'Ivo Cabrera Loyola',
+    'es0948': 'Evelyn Salazar Balarezo'
+  };
 
-  const checkingView = document.getElementById('checkingView');
-  const invalidView = document.getElementById('invalidView');
-  const rsvpView = document.getElementById('rsvpView');
-  const thanksView = document.getElementById('thanksView');
-  const guestNameEl = document.getElementById('guestName');
-  const noNameWarn = document.getElementById('noNameWarn');
-  const btnSi = document.getElementById('btnSi');
-  const btnNo = document.getElementById('btnNo');
-  const btnChange = document.getElementById('btnChange');
-  const closedNote = document.getElementById('closedNote');
-  const form = document.getElementById('rsvpForm');
-  const fieldName = document.getElementById('fieldName');
-  const fieldAsistencia = document.getElementById('fieldAsistencia');
-  const fieldId = document.getElementById('fieldId');
-  const hiddenFrame = document.querySelector('iframe[name="hiddenFrame"]');
+  var guestId   = (params.get('id') || '').trim().toLowerCase();
+  var guestName = Object.prototype.hasOwnProperty.call(INVITADOS, guestId) ? INVITADOS[guestId] : '';
+  var firstName = guestName.split(' ')[0] || '';
+
+  var invitationView = document.getElementById('invitationView');
+  var invalidView    = document.getElementById('invalidView');
+  var statusView  = document.getElementById('statusView');
+  var rsvpView    = document.getElementById('rsvpView');
+  var thanksView  = document.getElementById('thanksView');
+  var guestNameEl = document.getElementById('guestName');
+  var btnSi       = document.getElementById('btnSi');
+  var btnNo       = document.getElementById('btnNo');
+  var btnChange   = document.getElementById('btnChange');
+  var closedNote  = document.getElementById('closedNote');
+  var deadlineMsg = document.getElementById('deadlineMsg');
+  var form        = document.getElementById('rsvpForm');
+  var hiddenFrame = document.querySelector('iframe[name="hiddenFrame"]');
 
   // Se puede editar la respuesta hasta la medianoche del 6 al 7 de septiembre (hora peninsular).
-  const CIERRE_EDICION = new Date('2026-09-07T00:00:00+02:00');
-  const sePuedeEditar = Date.now() < CIERRE_EDICION.getTime();
+  var CIERRE_EDICION = new Date('2026-09-07T00:00:00+02:00');
+  var sePuedeEditar = Date.now() < CIERRE_EDICION.getTime();
+
+  var ICS = [
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Invitacion//ES','CALSCALE:GREGORIAN',
+    'BEGIN:VEVENT','UID:cumple-ruben-20260912@invitacion',
+    'DTSTAMP:20260828T090000Z','DTSTART:20260912T140000','DTEND:20260912T200000',
+    'SUMMARY:Cumpleanos de Ruben Escobedo Horna',
+    'LOCATION:Rambla del Carmel 28, Barcelona',
+    'DESCRIPTION:Te esperamos para brindar, reir y pasarlo en grande.',
+    'END:VEVENT','END:VCALENDAR'
+  ].join('\r\n');
+  document.getElementById('btnIcs').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ICS);
+
+  function show(el){ el.hidden = false; }
+  function hide(el){ el.hidden = true; }
 
   function showRsvp(){
-    checkingView.style.display = 'none';
-    thanksView.style.display = 'none';
-    rsvpView.style.display = 'block';
-    btnSi.disabled = false;
-    btnNo.disabled = false;
-    if(guestName){
-      guestNameEl.textContent = guestName;
-    } else {
-      guestNameEl.textContent = '—';
-      noNameWarn.style.display = 'block';
-      btnSi.disabled = true;
-      btnNo.disabled = true;
-    }
+    hide(statusView); hide(thanksView); show(rsvpView);
+    btnSi.disabled = false; btnNo.disabled = false;
+    btnSi.textContent = 'Sí, allí estaré';
+    btnNo.textContent = 'No podré ir';
+    deadlineMsg.textContent = sePuedeEditar
+      ? 'Confirma antes del 6 de septiembre'
+      : 'El plazo ya pasó, pero todavía estás a tiempo de decírnoslo';
+    guestNameEl.textContent = guestName;
   }
 
   function showThanks(respuesta){
-    checkingView.style.display = 'none';
-    rsvpView.style.display = 'none';
-    thanksView.style.display = 'block';
-    document.getElementById('thanksMsg').textContent = respuesta === 'Sí'
-      ? 'Te esperamos ' + (guestName || '') + ' el próximo 12 de septiembre a partir de las 14:00 h. ¡Nos vemos allí!'
-      : 'Gracias por avisar, ' + (guestName || '') + '. Sentimos que no puedas asistir.';
+    hide(statusView); hide(rsvpView); show(thanksView);
+    var si = respuesta === 'Sí' || respuesta === 'Si';
+    var stamp = document.getElementById('thanksStamp');
+    stamp.className = si ? 'stamp' : 'stamp no';
+    stamp.innerHTML = si
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> Confirmado'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg> No asistirá';
     if(sePuedeEditar){
-      btnChange.style.display = 'inline';
-      closedNote.style.display = 'none';
+      btnChange.hidden = false;
+      closedNote.hidden = true;
     } else {
-      btnChange.style.display = 'none';
-      closedNote.style.display = 'block';
+      btnChange.hidden = true;
+      closedNote.hidden = false;
     }
+    document.getElementById('thanksMsg').textContent = si
+      ? (firstName ? firstName + ', te esperamos el 12 de septiembre a partir de las 14:00 h.' : 'Te esperamos el 12 de septiembre a partir de las 14:00 h.')
+      : (firstName ? 'Gracias por avisar, ' + firstName + '. Te echaremos de menos.' : 'Gracias por avisar. Te echaremos de menos.');
   }
 
-  function sendRSVP(respuesta){
-    btnSi.disabled = true;
-    btnNo.disabled = true;
-    fieldName.value = guestName;
-    fieldAsistencia.value = respuesta;
-    fieldId.value = guestId;
+  function sendRSVP(respuesta, boton){
+    btnSi.disabled = true; btnNo.disabled = true;
+    var textoOriginal = boton.textContent;
+    boton.textContent = 'Enviando…';
+
+    var fallback = setTimeout(function(){ showThanks(respuesta); }, 6000);
 
     hiddenFrame.addEventListener('load', function onLoad(){
       hiddenFrame.removeEventListener('load', onLoad);
+      clearTimeout(fallback);
+      boton.textContent = textoOriginal;
       showThanks(respuesta);
     });
 
+    document.getElementById('fieldName').value = guestName;
+    document.getElementById('fieldAsistencia').value = respuesta;
+    document.getElementById('fieldId').value = guestId;
     form.submit();
   }
 
-  btnSi.addEventListener('click', function(){ sendRSVP('Sí'); });
-  btnNo.addEventListener('click', function(){ sendRSVP('No'); });
+  btnSi.addEventListener('click', function(){ sendRSVP('Sí', btnSi); });
+  btnNo.addEventListener('click', function(){ sendRSVP('No', btnNo); });
   btnChange.addEventListener('click', showRsvp);
 
   async function init(){
-    if(!guestId){
-      showRsvp();
+    // Puerta de entrada: sin id válido no se muestra la invitación.
+    if(!guestName){
+      show(invalidView);
       return;
     }
-    if(!VALID_IDS.includes(guestId.trim())){
-      checkingView.style.display = 'none';
-      invalidView.style.display = 'block';
-      return;
-    }
+    show(invitationView);
+
     try{
-      const res = await fetch(CSV_URL);
-      const text = await res.text();
-      const parsed = Papa.parse(text.trim());
-      const rows = parsed.data;
-      // columnas reales: [Marca temporal, ID Invitado, Nombre, Asistencia]
-      let existing = null;
-      for(let i = 1; i < rows.length; i++){
-        const row = rows[i];
-        if(row && row[1] && row[1].trim() === guestId.trim()){
-          existing = row;
-        }
+      var res = await fetch(CSV_URL);
+      var text = await res.text();
+      var rows = Papa.parse(text.trim()).data;
+      var existing = null;
+      for(var i = 1; i < rows.length; i++){
+        var row = rows[i];
+        if(row && row[1] && row[1].trim().toLowerCase() === guestId){ existing = row; }
       }
-      if(existing){
-        showThanks(existing[3]);
-      } else {
-        showRsvp();
-      }
+      if(existing){ showThanks(existing[3]); } else { showRsvp(); }
     }catch(e){
       showRsvp();
     }
