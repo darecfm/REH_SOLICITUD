@@ -74,6 +74,12 @@
 
   .thanks{display:none;text-align:center;padding-top:6px}
   .thanks p{font-size:clamp(13px,3.5vw,14px);line-height:1.6}
+  .change{
+    background:none;border:none;font-family:inherit;font-size:12px;
+    color:var(--ink);text-decoration:underline;cursor:pointer;padding:6px;margin-top:4px;
+  }
+  .change:hover{color:var(--red)}
+  .closed-note{font-size:12px;line-height:1.6;color:#6B635B;margin:8px 0 0;max-width:30ch;margin-inline:auto}
 
   .box{
     border:1px solid var(--ink);padding:16px 18px;margin-top:26px;
@@ -133,6 +139,8 @@
 
     <div class="thanks" id="thanksView" style="display:none">
       <p id="thanksMsg"></p>
+      <button class="change" id="btnChange" type="button">Cambiar mi respuesta</button>
+      <p class="closed-note" id="closedNote" style="display:none">El plazo para modificar respuestas se cerró el 6 de septiembre. Si te surge un imprevisto, avisa a Diego directamente.</p>
     </div>
 
     <div class="box">¡Te esperamos para brindar, reír y pasarlo en grande!</div>
@@ -172,15 +180,24 @@
   const noNameWarn = document.getElementById('noNameWarn');
   const btnSi = document.getElementById('btnSi');
   const btnNo = document.getElementById('btnNo');
+  const btnChange = document.getElementById('btnChange');
+  const closedNote = document.getElementById('closedNote');
   const form = document.getElementById('rsvpForm');
   const fieldName = document.getElementById('fieldName');
   const fieldAsistencia = document.getElementById('fieldAsistencia');
   const fieldId = document.getElementById('fieldId');
   const hiddenFrame = document.querySelector('iframe[name="hiddenFrame"]');
 
+  // Se puede editar la respuesta hasta la medianoche del 6 al 7 de septiembre (hora peninsular).
+  const CIERRE_EDICION = new Date('2026-09-07T00:00:00+02:00');
+  const sePuedeEditar = Date.now() < CIERRE_EDICION.getTime();
+
   function showRsvp(){
     checkingView.style.display = 'none';
+    thanksView.style.display = 'none';
     rsvpView.style.display = 'block';
+    btnSi.disabled = false;
+    btnNo.disabled = false;
     if(guestName){
       guestNameEl.textContent = guestName;
     } else {
@@ -198,6 +215,13 @@
     document.getElementById('thanksMsg').textContent = respuesta === 'Sí'
       ? 'Te esperamos ' + (guestName || '') + ' el próximo 12 de septiembre a partir de las 14:00 h. ¡Nos vemos allí!'
       : 'Gracias por avisar, ' + (guestName || '') + '. Sentimos que no puedas asistir.';
+    if(sePuedeEditar){
+      btnChange.style.display = 'inline';
+      closedNote.style.display = 'none';
+    } else {
+      btnChange.style.display = 'none';
+      closedNote.style.display = 'block';
+    }
   }
 
   function sendRSVP(respuesta){
@@ -217,6 +241,7 @@
 
   btnSi.addEventListener('click', function(){ sendRSVP('Sí'); });
   btnNo.addEventListener('click', function(){ sendRSVP('No'); });
+  btnChange.addEventListener('click', showRsvp);
 
   async function init(){
     if(!guestId){
@@ -239,7 +264,6 @@
         const row = rows[i];
         if(row && row[1] && row[1].trim() === guestId.trim()){
           existing = row;
-          break;
         }
       }
       if(existing){
